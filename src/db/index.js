@@ -3,15 +3,12 @@ import { DB_NAME } from "../constants.js";
 
 
 const connectDB = async () => {
-    try{
-      const connectionInstance = await mongoose.connect(`
-        ${process.env.MONGODB_URL}/${DB_NAME}`)
-        console.log(`\n MongoDB connected !! DB HORT: 
-            ${connectionInstance.connection.host}`);
-    }catch (error) {
-        console.log("MONGODB connection FAILED", error);
-        process.exit(1)
-    }
+    mongoose.connect(`${process.env.MONGODB_URL}/${DB_NAME}`, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log("✅ Connected to MongoDB Atlas"))
+    .catch(err => console.error("❌ MongoDB connection error:", err));
 }
 
 export default connectDB
